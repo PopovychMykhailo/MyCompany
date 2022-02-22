@@ -1,0 +1,57 @@
+﻿@model IQueryable<ServiceItem>
+@{
+    string title = "Панель адміністратора";
+    ViewBag.Title = title;
+}
+
+<div>
+    <h2>@title</h2>
+    
+    <!-- Послуги компанії -->
+    <div>
+        <h3>Наші послуги</h3>
+        <div>
+            <a asp-area="Admin" asp-controller="ServiceItems" asp-action="Edit" asp-route-id="">Додати послугу</a>
+        </div>
+
+        <!-- Відобразити список всіх послуг -->
+        @if (Model.Any())
+        {
+            <div>
+                @foreach(ServiceItem entity in Model)
+                {
+                    <div>
+                        <a asp-area="Admin" asp-controller="ServiceItems" asp-action="Edit" asp-route-id="@entity.Id"> Редагувати</a>
+                        |
+                        <form style="display: inline-block;" id="form-@entity.Id" asp-area="Admin" asp-controller="ServiceItems" asp-action="Delete" method="post" >
+                            <input type="hidden" name="id" value="@entity.Id">
+                            <a href="#" onclick="document.getElementById('form-@entity.Id').submit();"> Видалити</a>
+                        </form>
+                        |
+                        <a asp-area="" asp-controller="Services" asp-action="Index" asp-route-id="@entity.Id">
+                            @($"{entity.Title}")
+                        </a>
+                    </div>
+                }
+            </div>  
+        }
+    </div>
+
+    <!-- Сторінки сайту -->
+    <div class="div-box">
+        <h3>Редагувати сторінки сайту</h3>
+
+        <a asp-area="Admin" asp-controller="TextFields" asp-action="Edit" asp-route-codeWord="PageIndex"    > Головна </a>
+        <a asp-area="Admin" asp-controller="TextFields" asp-action="Edit" asp-route-codeWord="PageServices" > Наші послуги</a>
+        <a asp-area="Admin" asp-controller="TextFields" asp-action="Edit" asp-route-codeWord="PageContacts" > Контакти </a>
+    </div>
+
+
+    <!-- Кнопка виходу -->
+    <div class="div-box">
+        <form asp-area="" asp-controller="Account" asp-action="Logout" method="post">
+            <input type="submit" value="Вийти" />
+        </form>
+    </div>
+
+</div>

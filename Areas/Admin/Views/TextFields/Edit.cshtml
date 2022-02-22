@@ -1,0 +1,68 @@
+﻿@model TextField
+@{
+    ViewBag.Title = "Редагування запису";
+}
+
+<script src="~/js/ckeditor/ckeditor.js"></script>
+
+<div>
+    <h1>@ViewBag.Title</h1>
+    <div>
+        <form asp-area="Admin" asp-controller="TextFields" asp-action="Edit" method="post" enctype="multipart/form-data">
+            
+            <!-- Статичні дані -->
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="CodeWord" />
+            <input type="hidden" asp-for="DateAdded" />
+
+            <div asp-validation-summary="All"></div>
+
+            <!-- Title -->
+            <div class="div-box">
+                <label asp-for="Title"></label>
+                <input asp-for="Title" />
+                <span  asp-validation-for="Title"></span>
+            </div>
+
+            <!-- Description -->
+            <div class="div-box">
+                <label asp-for="Description"></label>
+                <textarea asp-for="Description"></textarea>
+                <span  asp-validation-for="Description"></span>
+            </div>
+
+            <!-- Metatag Title -->
+            <div class="div-box">
+                <label asp-for="MetaTitle"></label>
+                <input asp-for="MetaTitle" />
+                <span  asp-validation-for="MetaTitle"></span>
+            </div>
+
+            <!-- Metatag Description -->
+            <div class="div-box">
+                <label asp-for="MetaDescription"></label>
+                <input asp-for="MetaDescription" />
+                <span  asp-validation-for="MetaDescription"></span>
+            </div>
+
+            <!-- Metatag Keywords -->
+            <div class="div-box">
+                <label asp-for="MetaKeywords"></label>
+                <input asp-for="MetaKeywords" />
+                <span  asp-validation-for="MetaKeywords"></span>
+            </div>
+
+            <!-- Кнопка відправлення форми -->
+            <input type="submit" value="Зберегти" />
+
+        </form>
+    </div>
+</div>
+
+
+<script>
+    window.onload = function() {
+        var newCKEdit = CKEDITOR.replace('@Html.IdFor(x=>x.Description)');
+        newCKEdit.updateElement();
+    }
+</script>
